@@ -1,0 +1,14 @@
+.items {
+    display: flex;
+    flex-direction: row;
+    gap: 80px;
+    width: 100%;
+}
+
+.items>div {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 12px;
+    flex: 1;
+}

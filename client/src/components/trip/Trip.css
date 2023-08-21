@@ -1,0 +1,31 @@
+.trip h3 span {
+    color: #006daa;
+}
+
+.weather {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.weather p {
+    margin-right: 12px;
+}
+
+.weather button {
+    padding: 4px 12px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 12px;
+}
+
+.weather button:hover {
+    cursor: pointer;
+}
+
+.weather button svg {
+    width: 16px;
+    height: 16px;
+}
