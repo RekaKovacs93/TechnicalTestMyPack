@@ -4,6 +4,20 @@ const getPackedItems = async () => {
   return items;
 };
 
+const updatePackedItems = async (item) => {
+  const res = await fetch("http://localhost:3001/trip", {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(item),
+  });
+
+  const updatedPackedItems = await res.json();
+  return updatedPackedItems;
+};
+
 module.exports = {
   getPackedItems,
+  updatePackedItems
 };

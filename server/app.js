@@ -61,6 +61,13 @@ app.get("/packed-items", (req, res) => {
   res.json(items);
 });
 
+app.post("/packed-items", (req, res) => {
+  const newItem = req.body;
+  const items = get_packed_items();
+  items.add(newItem)
+
+})
+
 app.listen(PORT, (error) => {
   if (!error) console.log("Server is running. Listening on port " + PORT);
   else console.log("Error occurred, server can't start", error);

@@ -2,7 +2,7 @@ import "./Items.css";
 import ItemList from "./itemList/ItemList";
 
 import { getItems } from "../../api/items";
-import { getPackedItems } from "../../api/packedItems";
+import { getPackedItem, updatePackedItems } from "../../api/packedItems";
 
 import { useState, useEffect } from "react";
 
@@ -24,6 +24,13 @@ function Items() {
     fetchAllItems();
     fetchPackedItems();
   }, []);
+
+  const onClickAdd = async (id) => {
+    const updatedPackedItems = await updatePackedItems({
+      ...packedItems,
+    item})
+    setPackedItems(updatedPackedItems)
+  }
 
   return (
     <div className="items">

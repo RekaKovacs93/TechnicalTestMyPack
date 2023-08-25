@@ -8,6 +8,7 @@ import {
 } from "react-icons/md";
 
 function ItemList(props) {
+  
   return (
     <>
       <div className="item-list-filters">
@@ -32,6 +33,10 @@ function ItemList(props) {
           return (
             <div className="item" key={item.id}>
               <p>{item.title}</p>
+              <button
+              onClick={() => onClickAdd(item)}
+              >
+              +</button>
             </div>
           );
         })}
