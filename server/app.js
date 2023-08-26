@@ -6,8 +6,11 @@ const {
   get_trip,
   update_trip,
   get_packed_items,
+  update_packed_items,
+  delete_packed_item,
 } = require("./db.js");
 const cors = require("cors");
+
 
 const app = express();
 const PORT = 3001;
@@ -59,12 +62,23 @@ app.get("/packed-items", (req, res) => {
   const items = get_packed_items();
   res.status(200);
   res.json(items);
+  
 });
 
-app.post("/packed-items", (req, res) => {
-  const newItem = req.body;
+app.put("/packed-items", (req, res) => {
+  const item = req.body;
+  update_packed_items(item);
   const items = get_packed_items();
-  items.add(newItem)
+  res.status(200); 
+  res.json(items );
+})
+
+app.delete("/packed-items", (req, res) => {
+  const item = req.body;
+  delete_packed_item(item);
+  const items = get_items();
+  res.status(200);
+  res.json(items)
 
 })
 

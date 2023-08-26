@@ -2,7 +2,7 @@ import "./Items.css";
 import ItemList from "./itemList/ItemList";
 
 import { getItems } from "../../api/items";
-import { getPackedItem, updatePackedItems } from "../../api/packedItems";
+import { getPackedItems, updatePackedItems } from "../../api/packedItems";
 
 import { useState, useEffect } from "react";
 
@@ -17,6 +17,7 @@ function Items() {
 
   const fetchPackedItems = async () => {
     const items = await getPackedItems();
+    console.log('fetch patcked items', items)
     setPackedItems(items);
   };
 
@@ -25,18 +26,20 @@ function Items() {
     fetchPackedItems();
   }, []);
 
-  const onClickAdd = async (id) => {
-    const updatedPackedItems = await updatePackedItems({
-      ...packedItems,
-    item})
-    setPackedItems(updatedPackedItems)
+  const onClickAdd = async (event) => {
+    event.preventDefault()
+    const itemId = event.target.value
+    const newPackedItem = allItems.find((item) => item.id == itemId)
+    const updatedPackedItems = await updatePackedItems(newPackedItem)
+    setPackedItems(updatedPackedItems);
+    
   }
 
   return (
     <div className="items">
       <div>
         <h4>Suggested Items</h4>
-        <ItemList items={allItems} />
+        <ItemList items={allItems} onClickAdd={onClickAdd}/>
       </div>
 
       <div>

@@ -44,6 +44,17 @@ const get_packed_items = () => {
   return db["packedItems"];
 };
 
+const update_packed_items = (item) => {
+  db["packedItems"] = [
+    ...db.packedItems,
+    item
+  ];
+}
+
+const delete_packed_item = (item) => {
+  db["packedItems"] = [...db.packedItems].remove(item);
+}
+
 module.exports = {
   initialise_db,
   get_trip,
@@ -51,4 +62,6 @@ module.exports = {
   get_items,
   get_item_by_id,
   get_packed_items,
+  update_packed_items,
+  delete_packed_item
 };
