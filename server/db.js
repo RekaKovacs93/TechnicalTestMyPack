@@ -44,16 +44,23 @@ const get_packed_items = () => {
   return db["packedItems"];
 };
 
-const update_packed_items = (item) => {
+const add_packed_items = (item) => {
   db["packedItems"] = [
     ...db.packedItems,
     item
   ];
 }
 
-const delete_packed_item = (item) => {
-  db["packedItems"] = [...db.packedItems].remove(item);
+const update_packed_items = (id) => {
+  db["packedItems"] = [
+    ...db.packedItems
+  ]
 }
+
+const delete_packed_item = (id) => {
+  db["packedItems"] = db["packedItems"].filter((item) => item.id !== id);
+}
+
 
 module.exports = {
   initialise_db,
@@ -62,6 +69,7 @@ module.exports = {
   get_items,
   get_item_by_id,
   get_packed_items,
-  update_packed_items,
-  delete_packed_item
+  add_packed_items,
+  delete_packed_item,
+  update_packed_items
 };

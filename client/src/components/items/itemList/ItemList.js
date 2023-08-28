@@ -1,5 +1,4 @@
 import "./ItemList.css";
-
 import {
   MdOutlineList,
   MdOutlineSportsVolleyball,
@@ -7,25 +6,34 @@ import {
   MdStars,
 } from "react-icons/md";
 
+
 function ItemList(props) {
 
 
   return (
     <>
       <div className="item-list-filters">
-        <button>
+        <button
+          onClick={props.resetFilter}
+          >
           <MdOutlineList />
           All
         </button>
-        <button>
+        <button
+          onClick={props.filterItems}
+          value="essentials" >
           <MdStars />
           Essentials
         </button>
-        <button>
+        <button
+          onClick={props.filterItems}
+          value="sports" >
           <MdOutlineSportsVolleyball />
           Sports
         </button>
-        <button>
+        <button
+          onClick={props.filterItems}
+          value="hiking">
           <MdOutlineHiking /> Hiking
         </button>
       </div>
@@ -34,10 +42,16 @@ function ItemList(props) {
           return (
             <div className="item" key={item.id}>
               <p>{item.title}</p>
+              
               <button
                 onClick={props.onClickAdd}
                 value = {item.id}>
                 +
+              </button>
+              <button
+                onClick={props.onClickRemove}
+                value = {item.id}>
+                -
               </button>
             </div>
           );

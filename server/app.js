@@ -6,8 +6,9 @@ const {
   get_trip,
   update_trip,
   get_packed_items,
-  update_packed_items,
+  add_packed_items,
   delete_packed_item,
+  update_packed_items
 } = require("./db.js");
 const cors = require("cors");
 
@@ -65,21 +66,37 @@ app.get("/packed-items", (req, res) => {
   
 });
 
-app.put("/packed-items", (req, res) => {
+app.post("/packed-items", (req, res) => {
   const item = req.body;
-  update_packed_items(item);
+  add_packed_items(item);
   const items = get_packed_items();
   res.status(200); 
   res.json(items );
 })
 
-app.delete("/packed-items", (req, res) => {
-  const item = req.body;
-  delete_packed_item(item);
-  const items = get_items();
+app.put("/packed-items/:id", (req, res) => {
+  const id = req.params.id;
+  update_packed_items(id);
+  const items = get_packed_items();
+  res.status(200);
+  res.json(items);
+})
+
+app.delete("/packed-items/:id", (req, res) => {
+  const id = req.params.id;
+  // const item = get_item_by_id(id);
+  // if (item === undefined) {
+  //   res.status(404);
+  //   res.json({ error: "Item not found" });
+  //   return;
+  // }
+  // delete_packed_item(id);
+  console.log("delete res id", id)
+  delete_packed_item(id);
+  const items = get_packed_items();
+  console.log(items)
   res.status(200);
   res.json(items)
-
 })
 
 app.listen(PORT, (error) => {
