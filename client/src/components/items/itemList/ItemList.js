@@ -9,6 +9,7 @@ import {
 
 function ItemList(props) {
 
+  // console.log({items});
 
   return (
     <>
@@ -42,7 +43,6 @@ function ItemList(props) {
           return (
             <div className="item" key={item.id}>
               <p>{item.title}</p>
-              
               <button
                 onClick={props.onClickAdd}
                 value = {item.id}>

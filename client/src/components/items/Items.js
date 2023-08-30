@@ -1,8 +1,8 @@
 import "./Items.css";
 import ItemList from "./itemList/ItemList";
 
-import { getItems } from "../../api/items";
-import { getPackedItems, addPackedItems, deletePackedItems, updatePackedItems} from "../../api/packedItems";
+import { addItems, getItems } from "../../api/items";
+import { getPackedItems, addPackedItems, deletePackedItems} from "../../api/packedItems";
 import { useState, useEffect } from "react";
 
 function Items() {
@@ -24,8 +24,8 @@ function Items() {
     fetchPackedItems();
   }, []);
 
-  const resetFilter = async (arrayType) => {
-    if (arrayType === "allItems"){
+  const resetFilter = (state) => {
+    if (state === allItems){
       fetchAllItems();
     }
     else {
@@ -33,46 +33,33 @@ function Items() {
     }
   }
 
-  const filterItems = async (event, arrayType) => {
-    event.preventDefault();
+  const filterItems = (event, state, setStateFunction) => {
+    //resetFilter(state);
     const itemTag = event.target.value;
-    const checkTags = (tag) => tag === itemTag;
-    if (arrayType === "allItems") {
-      const itemsWithTag = allItems.filter((item) => {
-      return item.tags.some(checkTags)
+    // const checkTags = (tag) => tag === itemTag;
+    const itemsWithTag = state.filter((item) => {
+      return item.tags.includes(itemTag)
     })
-    setAllItems(itemsWithTag);
-  }
-    else {
-      const itemsWithTag = packedItems.filter((item) => {
-        return item.tags.some(checkTags)
-      })
-      setPackedItems(itemsWithTag)
-  }
-    // console.log(itemsWithTag)
+    setStateFunction(itemsWithTag);
   }
 
   const onClickAdd = async (event) => {
-    event.preventDefault();
     const itemId = event.target.value;
     const newPackedItem = allItems.find((item) => item.id == itemId);
     const addedPackedItems = await addPackedItems(newPackedItem);
+    const newItemsList = allItems.filter((item) => item.id != itemId);
     setPackedItems(addedPackedItems);
-    // const newItemsList = allItems.filter((item) => item.id !== itemId);
-    // setAllItems(newItemsList);
-    // console.log(newItemsList)
-    
+    setAllItems(newItemsList);
   }
 
   const onClickRemove = async (event) => {
-    event.preventDefault();
     const itemId = event.target.value;
+    const item = packedItems.find((item) => item.id == itemId);
+    const addToAllItems = await addItems(item);
     await deletePackedItems(itemId);
-    console.log(itemId)
-    console.log("packed", packedItems)
-    const newPackedItems = packedItems.filter((item) => item.id !== itemId);
-    //console.log("deleted" ,itemDeleted)
+    const newPackedItems = packedItems.filter((item) => item.id != itemId);
     setPackedItems(newPackedItems);
+    setAllItems(addToAllItems);
     console.log("clicked remove", newPackedItems)
   }
 
@@ -83,8 +70,8 @@ function Items() {
         <ItemList
         items={allItems}
         onClickAdd={onClickAdd}
-        filterItems={(event) => filterItems(event, "allItems")} 
-        resetFilter={() => resetFilter("allItems")}/>
+        filterItems={(event) => filterItems(event, allItems, setAllItems)} 
+        resetFilter={() => resetFilter(allItems)}/>
       </div>
 
       <div>
@@ -92,8 +79,8 @@ function Items() {
         <ItemList
         items={packedItems}
         onClickRemove={onClickRemove}
-        filterItems={(event) => filterItems(event, "packedItems")}
-        resetFilter={() => resetFilter("packedItems")}
+        filterItems={(event) => filterItems(event, packedItems, setPackedItems)}
+        resetFilter={() => resetFilter(packedItems)}
         />
       </div>
     </div>

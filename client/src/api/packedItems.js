@@ -17,17 +17,17 @@ const addPackedItems = async (item) => {
   return addedPackedItems;
 };
 
-const updatePackedItems = async (id) => {
-  const res = await fetch(`http://localhost:3001/packed-items/${id}`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    }
-  });
+// const updatePackedItems = async (id) => {
+//   const res = await fetch(`http://localhost:3001/packed-items/${id}`, {
+//     method: "PUT",
+//     headers: {
+//       "Content-Type": "application/json",
+//     }
+//   });
 
-  const updatedPackedItems = await res.json();
-  return updatedPackedItems;
-}
+//   const updatedPackedItems = await res.json();
+//   return updatedPackedItems;
+// }
 
 const deletePackedItems = async (id) => {
   const res = await fetch(`http://localhost:3001/packed-items/${id}`, {
@@ -36,9 +36,7 @@ const deletePackedItems = async (id) => {
       "Content-Type": "application/json",
     }
   });
-  // const itemDeleted = await res.json();
-  // console.log("api res", res)
-  // return itemDeleted;
+  
 
 };
 
@@ -47,5 +45,5 @@ module.exports = {
   getPackedItems,
   addPackedItems,
   deletePackedItems,
-  updatePackedItems
+  // updatePackedItems
 };

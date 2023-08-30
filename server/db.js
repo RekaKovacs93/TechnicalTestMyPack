@@ -38,6 +38,17 @@ const get_item_by_id = (id) => {
   return items.find((item) => item.id === Number.parseInt(id));
 };
 
+const add_items = (item) => {
+  db["items"] = [
+    ...db.items,
+    item
+  ];
+}
+
+const delete_item = (id) => {
+  db["items"] = db["items"].filter((item) => item.id != id);
+}
+
 // Packed Items
 
 const get_packed_items = () => {
@@ -51,14 +62,9 @@ const add_packed_items = (item) => {
   ];
 }
 
-const update_packed_items = (id) => {
-  db["packedItems"] = [
-    ...db.packedItems
-  ]
-}
 
 const delete_packed_item = (id) => {
-  db["packedItems"] = db["packedItems"].filter((item) => item.id !== id);
+  db["packedItems"] = db["packedItems"].filter((item) => item.id != id);
 }
 
 
@@ -68,8 +74,9 @@ module.exports = {
   update_trip,
   get_items,
   get_item_by_id,
+  add_items,
+  delete_item,
   get_packed_items,
   add_packed_items,
   delete_packed_item,
-  update_packed_items
 };
