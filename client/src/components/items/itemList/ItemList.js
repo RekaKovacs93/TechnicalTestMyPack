@@ -1,3 +1,4 @@
+import  {useState} from "react";
 import "./ItemList.css";
 import {
   MdOutlineList,
@@ -9,54 +10,62 @@ import {
 
 function ItemList(props) {
 
-  // console.log({items});
+  const [currentFilter, setCurrentfilter] = useState("no-filter")
+
+  // const handleFilter = (event) => {
+  //   console.log(event.target.value)
+  //   setCurrentfilter(event.target.value)
+  // }
+  // when switching quickly here, the event.target.value would be 'undefined' why? 
+  
+  const itemsToDisplay = props.items.filter((item) => {
+    return item.tags.includes(currentFilter) || currentFilter == "no-filter" 
+  }).map((item) => {
+    return (
+      <div className="item" key={item.id}>
+        <p>{item.title}</p>
+        {props.listType === "suggested" ? (
+          <button onClick={props.onClickAdd} value={item.id}>
+            +
+          </button>
+        ) : (
+          <button onClick={props.onClickRemove} value={item.id}>
+            -
+          </button>
+        )}
+      </div>
+    );
+  })
 
   return (
     <>
       <div className="item-list-filters">
         <button
-          onClick={props.resetFilter}
+          onClick={()=> setCurrentfilter("no-filter")}
           >
           <MdOutlineList />
           All
         </button>
         <button
-          onClick={props.filterItems}
-          value="essentials" >
+          onClick={() => setCurrentfilter("essentials")}
+          disabled={currentFilter === "essentials"} >
           <MdStars />
           Essentials
         </button>
         <button
-          onClick={props.filterItems}
-          value="sports" >
+          onClick={() => setCurrentfilter("sports")}
+          disabled={currentFilter === "sports"}  >
           <MdOutlineSportsVolleyball />
           Sports
         </button>
         <button
-          onClick={props.filterItems}
-          value="hiking">
+          onClick={()=> setCurrentfilter("hiking")}
+          disabled={currentFilter === "hiking"}  >
           <MdOutlineHiking /> Hiking
         </button>
       </div>
       <div className="item-list">
-        {props.items.map((item) => {
-          return (
-            <div className="item" key={item.id}>
-              <p>{item.title}</p>
-              <button
-                onClick={props.onClickAdd}
-                value = {item.id}>
-                +
-              </button>
-              <button
-                onClick={props.onClickRemove}
-                value = {item.id}>
-                -
-              </button>
-            </div>
-          );
-        })}
-
+        {itemsToDisplay}
         {props.items.length === 0 && (
           <div className="empty">
             <p>No items</p>

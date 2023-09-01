@@ -3,14 +3,16 @@ import ItemList from "./itemList/ItemList";
 
 import { addItems, getItems } from "../../api/items";
 import { getPackedItems, addPackedItems, deletePackedItems} from "../../api/packedItems";
+
 import { useState, useEffect } from "react";
 
-function Items() {
+function Items(props) {
   const [allItems, setAllItems] = useState([]);
   const [packedItems, setPackedItems] = useState([]);
-
-  const fetchAllItems = async () => {
-    const items = await getItems();
+  
+  
+  const fetchAllItems = async (weather) => {
+    const items = await getItems(weather);
     setAllItems(items);
   };
 
@@ -20,28 +22,15 @@ function Items() {
   };
 
   useEffect(() => {
-    fetchAllItems();
-    fetchPackedItems();
+    fetchPackedItems()
+    fetchAllItems(props.currentWeather);
   }, []);
 
-  const resetFilter = (state) => {
-    if (state === allItems){
-      fetchAllItems();
-    }
-    else {
-      fetchPackedItems();
-    }
-  }
 
-  const filterItems = (event, state, setStateFunction) => {
-    //resetFilter(state);
-    const itemTag = event.target.value;
-    // const checkTags = (tag) => tag === itemTag;
-    const itemsWithTag = state.filter((item) => {
-      return item.tags.includes(itemTag)
-    })
-    setStateFunction(itemsWithTag);
-  }
+  useEffect(() => {
+    fetchAllItems(props.currentWeather);
+  }, [props.currentWeather]);
+
 
   const onClickAdd = async (event) => {
     const itemId = event.target.value;
@@ -68,10 +57,10 @@ function Items() {
       <div>
         <h4>Suggested Items</h4>
         <ItemList
+        listType="suggested"
         items={allItems}
         onClickAdd={onClickAdd}
-        filterItems={(event) => filterItems(event, allItems, setAllItems)} 
-        resetFilter={() => resetFilter(allItems)}/>
+        />
       </div>
 
       <div>
@@ -79,8 +68,6 @@ function Items() {
         <ItemList
         items={packedItems}
         onClickRemove={onClickRemove}
-        filterItems={(event) => filterItems(event, packedItems, setPackedItems)}
-        resetFilter={() => resetFilter(packedItems)}
         />
       </div>
     </div>

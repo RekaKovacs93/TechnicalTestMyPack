@@ -1,5 +1,6 @@
-const getItems = async () => {
-  const res = await fetch("http://localhost:3001/items");
+const getItems = async (weather) => {
+
+  const res = await fetch(`http://localhost:3001/items?current-weather=${weather}`);
   const items = await res.json();
   return items;
 };

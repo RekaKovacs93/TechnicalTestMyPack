@@ -5,7 +5,8 @@ import { useEffect, useState } from "react";
 
 import { PiSun, PiCloudRain } from "react-icons/pi";
 
-function Trip() {
+function Trip(props) {
+
   const [trip, setTrip] = useState({
     weatherConditions: "",
   });
@@ -21,6 +22,7 @@ function Trip() {
       weatherConditions: weather,
     });
     setTrip(updatedTrip);
+    props.handleWeatherUpdate(updatedTrip.weatherConditions)
   };
 
   useEffect(() => {

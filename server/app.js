@@ -38,9 +38,15 @@ app.patch("/trip", (req, res) => {
 });
 
 // Items
-
+// /items/
 app.get("/items", (req, res) => {
-  const items = get_items();
+  const weatherCondtion = req.query["current-weather"] 
+  let items = get_items();
+  if (weatherCondtion){
+    items = items.filter((item) => {
+      return item.appropriateWeather === weatherCondtion || item.appropriateWeather === "any"
+    })
+  }
   res.status(200);
   res.json(items);
 });
