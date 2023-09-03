@@ -11,12 +11,6 @@ import {
 function ItemList(props) {
 
   const [currentFilter, setCurrentfilter] = useState("no-filter")
-
-  // const handleFilter = (event) => {
-  //   console.log(event.target.value)
-  //   setCurrentfilter(event.target.value)
-  // }
-  // when switching quickly here, the event.target.value would be 'undefined' why? 
   
   const itemsToDisplay = props.items.filter((item) => {
     return item.tags.includes(currentFilter) || currentFilter == "no-filter" 

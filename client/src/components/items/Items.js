@@ -49,7 +49,6 @@ function Items(props) {
     const newPackedItems = packedItems.filter((item) => item.id != itemId);
     setPackedItems(newPackedItems);
     setAllItems(addToAllItems);
-    console.log("clicked remove", newPackedItems)
   }
 
   return (

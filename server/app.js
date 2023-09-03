@@ -38,7 +38,7 @@ app.patch("/trip", (req, res) => {
 });
 
 // Items
-// /items/
+
 app.get("/items", (req, res) => {
   const weatherCondtion = req.query["current-weather"] 
   let items = get_items();
@@ -74,13 +74,6 @@ app.post("/items", (req, res) => {
 
 app.delete("/items/:id", (req, res) => {
   const id = req.params.id;
-  // const item = get_item_by_id(id);
-  // if (item === undefined) {
-  //   res.status(404);
-  //   res.json({ error: "Item not found" });
-  //   return;
-  // }
-  // delete_packed_item(id);
   delete_item(id);
   const items = get_items();
   res.status(200);
@@ -105,26 +98,9 @@ app.post("/packed-items", (req, res) => {
   res.json(items );
 })
 
-// app.put("/packed-items/:id", (req, res) => {
-//   const id = req.params.id;
-//   update_packed_items(id);
-//   const items = get_packed_items();
-//   res.status(200);
-//   res.json(items);
-// })
-
 app.delete("/packed-items/:id", (req, res) => {
   const id = req.params.id;
-  // const item = get_item_by_id(id);
-  // if (item === undefined) {
-  //   res.status(404);
-  //   res.json({ error: "Item not found" });
-  //   return;
-  // }
-  // delete_packed_item(id);
   delete_packed_item(id);
-  // const item = get_item_by_id(id);
-  // add_items(item);
   const items = get_packed_items();
   res.status(200);
   res.json(items)
